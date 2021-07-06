@@ -1,8 +1,13 @@
 package be.josimon.BWPOJO;
 
+import be.josimon.util.SHA;
 
-// TODO CREATE HASH
-import be.josimon.hash.SHA;
+/**
+ * @author Simon Jonathan
+ * @version 1.0
+ * 
+ * 
+ */
 
 public class Person {
 	// variable
@@ -49,7 +54,7 @@ public class Person {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = SHA.hash(password);
 	}
 	public String getRole() {
 		return role;
@@ -67,7 +72,7 @@ public class Person {
 		this.lastname = lastname;
 		this.address = address;
 		this.email = email;
-		this.password = password;
+		this.password = SHA.hash(password);
 		this.role = role;
 	}
 	
@@ -76,7 +81,7 @@ public class Person {
 		this.lastname = lastname;
 		this.address = address;
 		this.email = email;
-		this.password = password;
+		this.password = SHA.hash(password);
 		this.role = role;
 	}	
 	
