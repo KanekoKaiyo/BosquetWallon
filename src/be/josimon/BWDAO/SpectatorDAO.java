@@ -1,6 +1,8 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Spectator;
@@ -14,8 +16,31 @@ public class SpectatorDAO extends DAO<Spectator> {
 
 	@Override
 	public boolean create(Spectator obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			String sql = "INSERT INTO Person(firstname,lastname,discriminator,address,email,password,phonenumber,gender,birthdate) VALUES('" 
+					+ obj.getFirstname() + "','" 
+					+ obj.getLastname() + "','" 
+					+ obj.getRole() + "','" 
+					+ obj.getAddress() + "','"
+					+ obj.getEmail() + "','" 
+					+ obj.getPassword() + "','"
+					+ obj.getPhoneNumber() + "','"
+					+ obj.getGender() + "','" 
+					+ obj.getBirthdate() + "')";
+			// this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+			PreparedStatement pstmt = this.connect.prepareStatement(sql);
+			int result = pstmt.executeUpdate();
+			if(result != 0) {
+				return true;
+			} else {
+				System.out.println("Une soucis ? C'est pas normal :(");
+				return false;
+			}
+
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -31,15 +56,30 @@ public class SpectatorDAO extends DAO<Spectator> {
 	}
 
 	@Override
-	public Spectator find(int id) {
+	public Spectator find(Spectator obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Spectator> findAll() {
+	public List<Spectator> getAll(Spectator obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Spectator> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Spectator> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 }

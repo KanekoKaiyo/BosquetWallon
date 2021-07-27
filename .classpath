@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="C:/dev/java/eclipse-2020.09/workspace/BosquetWallon/jcalendar-1.1.4.jar"/>
 	<classpathentry kind="lib" path="C:/dev/java/eclipse-2020.09/workspace/BosquetWallon/joda-time-2.10.8.jar"/>
 	<classpathentry kind="lib" path="C:/dev/java/eclipse-2020.09/workspace/BosquetWallon/sqlite-jdbc-3.36.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/dev/java/eclipse-2020.09/workspace/GestionSalle/jcalendar-1.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,7 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Planning;
@@ -31,15 +32,36 @@ public class PlanningDAO extends DAO<Planning> {
 	}
 
 	@Override
+	public Planning find(Planning obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Planning> getAll(Planning obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Planning> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Planning find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Planning> findAll() {
+	public ArrayList<Planning> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 
 }

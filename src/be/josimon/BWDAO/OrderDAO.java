@@ -1,6 +1,7 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Order;
@@ -31,15 +32,37 @@ public class OrderDAO extends DAO<Order> {
 	}
 
 	@Override
+	public Order find(Order obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getAll(Order obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Order find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Order> findAll() {
+	public ArrayList<Order> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }

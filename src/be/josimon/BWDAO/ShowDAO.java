@@ -1,6 +1,7 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Show;
@@ -31,15 +32,37 @@ public class ShowDAO extends DAO<Show> {
 	}
 
 	@Override
+	public Show find(Show obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Show> getAll(Show obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Show> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Show find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Show> findAll() {
+	public ArrayList<Show> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }

@@ -1,6 +1,8 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Organizer;
@@ -14,8 +16,21 @@ public class OrganizerDAO extends DAO<Organizer> {
 
 	@Override
 	public boolean create(Organizer obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			String sql = "INSERT INTO Personne(firstname,lastname,discriminator,address,email,password,phonenumber) VALUES('" 
+					+ obj.getFirstname() + "','" 
+					+ obj.getLastname() + "','" 
+					+ obj.getRole() + "','" 
+					+ obj.getAddress() + "','"
+					+ obj.getEmail() + "','" 
+					+ obj.getPassword() + "','"
+					+ obj.getPhoneNumber() + "')";
+			this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+			return true;
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -31,15 +46,32 @@ public class OrganizerDAO extends DAO<Organizer> {
 	}
 
 	@Override
-	public Organizer find(int id) {
+	public Organizer find(Organizer obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Organizer> findAll() {
+	public List<Organizer> getAll(Organizer obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Organizer> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Organizer> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 
 }

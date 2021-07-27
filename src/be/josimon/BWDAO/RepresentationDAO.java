@@ -1,6 +1,7 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Representation;
@@ -31,15 +32,37 @@ public class RepresentationDAO extends DAO<Representation> {
 	}
 
 	@Override
+	public Representation find(Representation obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Representation> getAll(Representation obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Representation> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Representation find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Representation> findAll() {
+	public ArrayList<Representation> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }

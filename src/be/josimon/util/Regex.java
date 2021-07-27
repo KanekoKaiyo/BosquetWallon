@@ -19,6 +19,10 @@ public class Regex {
 	private static String regexpass = "^.(?=.{8,})((?=.*[!@#$%^&*()=+{};:,<.>]){1,})((?=.*\\\\\\\\d){0,})((?=.*[a-z]){0,1})((?=.*[A-Z]){0,1}).*$";
 	private static Pattern patternpass = Pattern.compile(regexpass);
 	
+	private static String regexphone = "^(\\+)?([ 0-9]){10,16}$";
+	private static Pattern patternphone = Pattern.compile(regexphone);
+	
+	
 	public static boolean verifMail(String mail) {
 		Matcher matchermail = patternmail.matcher(mail);
 		if(matchermail.matches() == true)
@@ -59,4 +63,11 @@ public class Regex {
 			return false;
 	}
 	
-}
+	public static boolean verifPhone(String phone) {
+		Matcher matcherphone = patternphone.matcher(phone);
+		if(matcherphone.matches() == true) 
+			return true;
+		else 
+			return false;
+	}
+ }

@@ -1,7 +1,10 @@
 package be.josimon.BWPOJO;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+
+import be.josimon.BWDAO.SpectatorDAO;
 
 /**
  * @author Simon Jonathan
@@ -61,6 +64,11 @@ public class Spectator extends Person {
 		this.birthdate = birthdate;
 	}
 	
-	// Methods
+	// dao
+	
+	public boolean create(Connection conn) {
+		SpectatorDAO dao = new SpectatorDAO(conn);
+		return dao.create(this);
+	}
 	
 }

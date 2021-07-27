@@ -1,6 +1,7 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Booking;
@@ -31,15 +32,37 @@ public class BookingDAO extends DAO<Booking> {
 	}
 
 	@Override
+	public Booking find(Booking obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Booking> getAll(Booking obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Booking> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Booking find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Booking> findAll() {
+	public ArrayList<Booking> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }

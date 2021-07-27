@@ -5,26 +5,34 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnect {
-	public static void connect() {
-        Connection conn = null;
+	private static Connection instance = null;
+	
+	private DBConnect() {
         try {
             // db parameters
             String url = "jdbc:sqlite:C:/sqlite/db/BW.db";
             // create a connection to the database
-            conn = DriverManager.getConnection(url);
+            instance = DriverManager.getConnection(url);
             
             System.out.println("Connection to SQLite has been established.");
             
         } catch (SQLException e) {
         	System.out.println(e.getMessage());
-        } finally {
+        } /* finally {
         	try {
-                if (conn != null) {
-                    conn.close();
+                if (instance != null) {
+                	instance.close();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-        }
+        } */
+	}
+	
+	public static Connection getInstance() {
+		if(instance == null) {
+			new DBConnect();
+		}
+		return instance;
 	}
 }

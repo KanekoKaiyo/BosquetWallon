@@ -1,6 +1,9 @@
 package be.josimon.BWPOJO;
 
+import java.sql.Connection;
 import java.util.List;
+
+import be.josimon.BWDAO.OrganizerDAO;
 
 public class Organizer extends Person {
 	// Variable
@@ -36,11 +39,15 @@ public class Organizer extends Person {
 	}
 
 	public Organizer(String firstname, String lastname, String address, String email, String password, String role,
-			String phoneNumber, List<Booking> listBooking) {
+			String phoneNumber) {
 		super(firstname, lastname, address, email, password, role);
 		this.phoneNumber = phoneNumber;
-		this.listBooking = listBooking;
 	}
 	
+	// dao
+	public boolean create(Connection conn) {
+		OrganizerDAO dao = new OrganizerDAO(conn);
+		return dao.create(this);
+	}
 	
 }

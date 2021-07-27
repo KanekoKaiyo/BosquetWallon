@@ -1,6 +1,8 @@
 package be.josimon.BWDAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Manager;
@@ -14,8 +16,21 @@ public class ManagerDAO extends DAO<Manager> {
 
 	@Override
 	public boolean create(Manager obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			String sql = "INSERT INTO Personne(firstname,lastname,discriminator,address,email,password,phonenumber) VALUES('" 
+					+ obj.getFirstname() + "','" 
+					+ obj.getLastname() + "','" 
+					+ obj.getRole() + "','" 
+					+ obj.getAddress() + "','"
+					+ obj.getEmail() + "','" 
+					+ obj.getPassword() + "','"
+					+ obj.getPhoneNumber() + "')";
+			this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+			return true;
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -31,15 +46,31 @@ public class ManagerDAO extends DAO<Manager> {
 	}
 
 	@Override
-	public Manager find(int id) {
+	public Manager find(Manager obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Manager> findAll() {
+	public List<Manager> getAll(Manager obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Manager> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Manager> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 
 }

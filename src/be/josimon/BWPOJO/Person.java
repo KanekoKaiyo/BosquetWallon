@@ -1,5 +1,8 @@
 package be.josimon.BWPOJO;
 
+import java.sql.Connection;
+
+import be.josimon.BWDAO.PersonDAO;
 import be.josimon.util.SHA;
 
 /**
@@ -83,7 +86,14 @@ public class Person {
 		this.email = email;
 		this.password = SHA.hash(password);
 		this.role = role;
+	}
+	public Person() {
 	}	
 	
+	// DAO
 	
+	public Person find(Connection conn) {
+		PersonDAO dao = new PersonDAO(conn);
+		return dao.find(this);
+	}
 }
