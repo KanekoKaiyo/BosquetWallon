@@ -119,7 +119,7 @@ public class Connexion extends JFrame {
 								// la combinaison est bonne alors on peu continuer, il faut connaitre le role de l'utilisateur pour savoir ou le rediriger
 								if(prauth.getRole().equals("Spectator")) {
 									// log client
-									Spectator spectator = (Spectator) prauth;
+									Spectator spectator = new Spectator(prauth);
 									try {
 										SpectatorAccueil frame2 = new SpectatorAccueil(spectator);
 										instance.dispose();
@@ -129,7 +129,7 @@ public class Connexion extends JFrame {
 									}
 								} else if(prauth.getRole().equals("Organizer")) {
 									// log organisateur
-									Organizer orga = (Organizer) prauth;
+									Organizer orga = new Organizer(prauth);
 									try {
 										OrgaAccueil frame2 = new OrgaAccueil(orga);
 										instance.dispose();
@@ -139,7 +139,7 @@ public class Connexion extends JFrame {
 									}
 								} else if(prauth.getRole().equals("Manager")) {
 									// log gestionnaire
-									Manager man = (Manager) prauth;
+									Manager man = new Manager(prauth);
 									try {
 										ManagerAccueil frame2 = new ManagerAccueil(man);
 										instance.dispose();
@@ -164,7 +164,5 @@ public class Connexion extends JFrame {
 				}
 			}
 		});
-		
-		
 	}
 }

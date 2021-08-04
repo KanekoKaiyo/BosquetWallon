@@ -3,7 +3,6 @@ package be.josimon.BWDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -40,7 +39,7 @@ public class PersonDAO extends DAO<Person> {
 		Person pr = new Person();
 		try {
 			// On prepare la requete sql
-			String sql = "SELECT * FROM Personne WHERE email=? AND motDePasse=?";
+			String sql = "SELECT * FROM Person WHERE email=? AND password=?";
 			PreparedStatement pS = this.connect.prepareStatement(sql);
 			pS.setString(1,obj.getEmail());
 			pS.setString(2, obj.getPassword());
@@ -54,7 +53,7 @@ public class PersonDAO extends DAO<Person> {
 				pr.setAddress(result.getString("address"));
 				pr.setRole(result.getString("discriminator"));
 				pr.setEmail(result.getString("email"));
-				pr.setPassword(result.getString("motDePasse"));
+				pr.setPassword(result.getString("password"));
 			}
 			return pr;
 		} catch(Exception ex) {
@@ -74,15 +73,5 @@ public class PersonDAO extends DAO<Person> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public ArrayList<Person> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
 
 }

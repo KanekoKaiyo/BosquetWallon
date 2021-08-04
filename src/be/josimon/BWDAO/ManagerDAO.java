@@ -2,7 +2,6 @@ package be.josimon.BWDAO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Manager;
@@ -17,7 +16,7 @@ public class ManagerDAO extends DAO<Manager> {
 	@Override
 	public boolean create(Manager obj) {
 		try {
-			String sql = "INSERT INTO Personne(firstname,lastname,discriminator,address,email,password,phonenumber) VALUES('" 
+			String sql = "INSERT INTO Person(firstname,lastname,discriminator,address,email,password,phonenumber) VALUES('" 
 					+ obj.getFirstname() + "','" 
 					+ obj.getLastname() + "','" 
 					+ obj.getRole() + "','" 
@@ -62,15 +61,5 @@ public class ManagerDAO extends DAO<Manager> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public ArrayList<Manager> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
 
 }

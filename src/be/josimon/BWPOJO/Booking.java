@@ -1,5 +1,10 @@
 package be.josimon.BWPOJO;
 
+import java.sql.Connection;
+import java.util.List;
+
+import be.josimon.BWDAO.BookingDAO;
+
 public class Booking {
 	// Variable
 	private int id;
@@ -7,7 +12,8 @@ public class Booking {
 	private double balance;
 	private double price;
 	private String status;
-	private Planning planning;
+	private List<Planning> planning;
+	private Organizer orga;
 	
 	// Getter & Setter
 	
@@ -41,16 +47,27 @@ public class Booking {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Planning getPlanning() {
+	
+	public List<Planning> getPlanning() {
 		return planning;
 	}
-	public void setPlanning(Planning planning) {
+	public void setPlanning(List<Planning> planning) {
 		this.planning = planning;
 	}
 	
-	// Constructor
+	public Organizer getOrga() {
+		return orga;
+	}
+	public void setOrga(Organizer orga) {
+		this.orga = orga;
+	}
 	
-	public Booking(int id, double deposite, double balance, double price, String status, Planning planning) {
+	// Constructor
+	public Booking(Organizer orga) {
+		this.orga = orga;
+	}
+	
+	public Booking(int id, double deposite, double balance, double price, String status, List<Planning> planning) {
 		this.id = id;
 		this.deposite = deposite;
 		this.balance = balance;
@@ -58,14 +75,25 @@ public class Booking {
 		this.status = status;
 		this.planning = planning;
 	}
-	public Booking(double deposite, double balance, double price, String status, Planning planning) {
+	public Booking(double deposite, double balance, double price, String status, List<Planning> planning) {
 		this.deposite = deposite;
 		this.balance = balance;
 		this.price = price;
 		this.status = status;
 		this.planning = planning;
 	}
+	public Booking(double deposite, double balance, String status, double price, Organizer organizer) {
+		this.deposite = deposite;
+		this.balance = balance;
+		this.price = price;
+		this.status = status;
+		this.orga = organizer;
+	}
 	
+	// dao
 	
+	public boolean CreateReservation(Connection conn) {
+		BookingDAO dao = new BookingDAO(conn);
+	}
 	
 }

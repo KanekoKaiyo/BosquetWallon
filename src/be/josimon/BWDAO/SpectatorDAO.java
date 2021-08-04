@@ -2,7 +2,6 @@ package be.josimon.BWDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.List;
 
 import be.josimon.BWPOJO.Spectator;
@@ -72,14 +71,4 @@ public class SpectatorDAO extends DAO<Spectator> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public ArrayList<Spectator> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
 }

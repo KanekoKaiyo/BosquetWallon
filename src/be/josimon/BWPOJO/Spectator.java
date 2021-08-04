@@ -64,6 +64,16 @@ public class Spectator extends Person {
 		this.birthdate = birthdate;
 	}
 	
+	public Spectator(Person person) {
+		this.id = person.id;
+		this.firstname = person.firstname;
+		this.lastname = person.lastname;
+		this.address = person.address;
+		this.email = person.email;
+		this.password = person.password;
+		this.role = person.role;
+	}
+	
 	// dao
 	
 	public boolean create(Connection conn) {

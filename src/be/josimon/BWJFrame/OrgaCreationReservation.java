@@ -1,13 +1,13 @@
 package be.josimon.BWJFrame;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,21 +19,25 @@ import javax.swing.border.EmptyBorder;
 import com.ibm.icu.util.Calendar;
 import com.toedter.calendar.JCalendar;
 
+import be.josimon.BWConnect.DBConnect;
+import be.josimon.BWPOJO.Booking;
 import be.josimon.BWPOJO.Organizer;
 import be.josimon.BWPOJO.Planning;
-import be.josimon.BWPOJO.Representation;
 
 public class OrgaCreationReservation extends JFrame {
+	
+	Connection conn = DBConnect.getInstance();
+	
 	private static final long serialVersionUID = 972621709763638816L;
 	private JPanel contentPane;
 	JFrame instance = this;
 	Calendar cal = Calendar.getInstance(); 
 	Calendar calfin = Calendar.getInstance();
-	// On recupere la liste complete du planning de la salle
-
-	// on crée un objet planning qui sera utiliser pour les test et la création de la reservation
-	Representation res = null;
-	Planning temp = null;
+	// TODO On recupere la liste complete du planning de la salle
+	List<Planning> list = new Planning().findAll(conn);
+	
+	Booking res = null;
+	Planning planning = null;
 	/**
 	 * Create the frame.
 	 */
@@ -135,8 +139,8 @@ public class OrgaCreationReservation extends JFrame {
 						lblprix.setText("");
 						btnvalid.setVisible(false);
 						// On recupere des objets contenant presque vide, ils possédent juste les referents pour la suite des opérations, je le mets la pour pouvoir faire plusieurs reservation à partir du moment ou l'utilisateur change la date de début !
-						res = orga.emptyRes();
-						temp = res.emptySalle();
+						res = new Booking(orga);
+						planning = new Planning();
 						
 						// Lorsqu'on selectionne une date de début on vérifie si celle si est déjà prise ou si elle est antérieur à demain
 						cal.set(calendardebut.getYearChooser().getYear(), calendardebut.getMonthChooser().getMonth(), calendardebut.getDayChooser().getDay());
@@ -145,7 +149,7 @@ public class OrgaCreationReservation extends JFrame {
 							lbldatedebut.setText("Il est impossible de reserver dans le passé ou pour le jour même");
 							calendarfin.setVisible(false);
 						} else {
-							temp.setDateDébutReservation(cal.getTime());
+							planning.setBeginDate(cal.getTime());
 								calendarfin.setVisible(true);
 						}
 					}
@@ -161,10 +165,10 @@ public class OrgaCreationReservation extends JFrame {
 					// si la date de fin ce trouve avant la date de début c'est pas possible
 					lbldatefin.setText("Il est impossible de reserver avec une date de fin avant la date début");
 				} else {
-					temp.setDateFinReservation(calfin.getTime());
+					planning.setEndDate(calfin.getTime());
 					boolean test = false;
-					for(PlanningSalle ps : list) {
-						if(temp.Overlap(ps)) {
+					for(Planning ps : list) {
+						if(planning.Overlap(ps)) {
 							test = true;
 							break;
 						}
@@ -174,17 +178,17 @@ public class OrgaCreationReservation extends JFrame {
 						lbldatefin.setText("L'intervalle de date n'est pas reservable, modifier votre choix");
 					} else {
 						// La reservation est possible, on va calculer le cout de celle ci est afficher un bouton pour que l'utilisateur puisse confirmer son choix
-						double prix = temp.CalculPrix();
+						double prix = planning.CalculPrix();
 						// On attribue les valeurs
-						res.setPrix(prix);
-						res.setAcompte(prix/10); // on considére que l'accompte est de 10% du prix total
-						res.setSolde(res.getPrix()-res.getAcompte());
-						res.setStatut("En attente");
+						res.setPrice(prix);
+						res.setDeposite(prix/10); // on considére que l'accompte est de 10% du prix total
+						res.setBalance(res.getPrice()-res.getDeposite());
+						res.setStatus("En attente");
 						
 						// On affiche les informations dans l'interface et on attends que le client valide la reservation et on affiche le bouton pour valider et payé
-						lblsolde.setText(String.valueOf(res.getSolde()));
-						lblaco.setText(String.valueOf(res.getAcompte()));
-						lblprix.setText(String.valueOf(res.getPrix()));
+						lblsolde.setText(String.valueOf(res.getBalance()));
+						lblaco.setText(String.valueOf(res.getDeposite()));
+						lblprix.setText(String.valueOf(res.getPrice()));
 						
 						btnvalid.setVisible(true);
 					}
@@ -195,11 +199,11 @@ public class OrgaCreationReservation extends JFrame {
 		btnvalid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lorsqu'on appuie sur le bouton il faut envoyé dans la db la reservation et le planning lié a la reservation et notifié l'utilisateur
-				boolean test = orga.createReservation(res.getAcompte(), res.getSolde(), "Acompte Payé", res.getPrix(),temp.getDateDébutReservation(), temp.getDateFinReservation());
+				boolean test = orga.createReservation(res.getDeposite(), res.getBalance(), "Acompte Payé", res.getPrice(),planning.getBeginDate(), planning.getEndDate());
 				if(test) {
 					// Dans le cadre d'une application a utilisé en production il faudrait ajouter ici une nouvelle fenetre qui permet le payement avec des intégrations diverse ( mastercard/visa/paypal/etc )
 					JOptionPane.showMessageDialog(null, "Votre reservation à bien été créer et le payement est validé");
-					OrgAcc frame2 = new OrgAcc(orga);
+					OrgaAccueil frame2 = new OrgaAccueil(orga);
 					instance.dispose();
 					frame2.setVisible(true);
 				} else {

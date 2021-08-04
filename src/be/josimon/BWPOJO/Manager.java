@@ -44,6 +44,16 @@ public class Manager extends Person {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public Manager(Person person) {
+		this.id = person.id;
+		this.firstname = person.firstname;
+		this.lastname = person.lastname;
+		this.address = person.address;
+		this.email = person.email;
+		this.password = person.password;
+		this.role = person.role;
+	}
+	
 	// dao
 	
 	public boolean create(Connection conn) {

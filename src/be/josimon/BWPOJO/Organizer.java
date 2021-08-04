@@ -1,9 +1,11 @@
 package be.josimon.BWPOJO;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 import be.josimon.BWDAO.OrganizerDAO;
+import be.josimon.GSPOJO.Reservation;
 
 public class Organizer extends Person {
 	// Variable
@@ -44,10 +46,47 @@ public class Organizer extends Person {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public Organizer(Person person) {
+		this.id = person.id;
+		this.firstname = person.firstname;
+		this.lastname = person.lastname;
+		this.address = person.address;
+		this.email = person.email;
+		this.password = person.password;
+		this.role = person.role;
+	}
+	
 	// dao
 	public boolean create(Connection conn) {
 		OrganizerDAO dao = new OrganizerDAO(conn);
 		return dao.create(this);
 	}
 	
+	public boolean createReservation(double acompte, double solde, String statut, Double prix,Date dateDébutReservation, Date dateFinReservation, Connection conn) {
+		// L'organisateur crée un objet reservation avant de le mettre dans la base de donnée
+		try {
+			Booking res = new Booking(acompte,solde,statut,prix,this);
+			// On va l'ajouter dans la base de donnée si c'est possible
+			boolean test = res.CreateReservation(conn);
+			if(test) {
+				// Si la création c'est bien faites, il faut demander a la DB de nous renvoyé les informations car il nous manque l'id !
+				res.FindiD();
+				if(test) {
+					// On test si la reservation a bien été ajouté, si c'est le cas on va demander a la classe Reservation de créer les plannings lié au date
+					boolean test2 = res.createPlanningSalle(dateDébutReservation,dateFinReservation);
+					// Si on reçoit true alors la reservation et le planning auront bien été ajouté dans la DB
+					if(test2)
+						return true;
+					else
+						return false;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception ex) {
+			return false;	
+		}
+	}
 }
