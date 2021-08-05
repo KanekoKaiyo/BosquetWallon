@@ -1,6 +1,7 @@
 package be.josimon.BWPOJO;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 import be.josimon.BWDAO.BookingDAO;
@@ -90,10 +91,32 @@ public class Booking {
 		this.orga = organizer;
 	}
 	
-	// dao
+	public Booking() {}
 	
+	// dao
 	public boolean CreateReservation(Connection conn) {
 		BookingDAO dao = new BookingDAO(conn);
+		return dao.create(this);
+	}
+	
+	public void findId(Connection conn) {
+		try {
+			BookingDAO dao = new BookingDAO(conn);
+			this.id = dao.find(this).getId();
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public boolean createPlanning(Date ddebut, Date dfin,Connection conn) {
+		try {
+			Planning plan = new Planning(ddebut, dfin,this);
+			boolean test = plan.createPlanning(conn);
+			return test;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 	
 }

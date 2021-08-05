@@ -199,7 +199,7 @@ public class OrgaCreationReservation extends JFrame {
 		btnvalid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lorsqu'on appuie sur le bouton il faut envoyé dans la db la reservation et le planning lié a la reservation et notifié l'utilisateur
-				boolean test = orga.createReservation(res.getDeposite(), res.getBalance(), "Acompte Payé", res.getPrice(),planning.getBeginDate(), planning.getEndDate());
+				boolean test = orga.createReservation(res.getDeposite(), res.getBalance(), "Acompte Payé", res.getPrice(),planning.getBeginDate(), planning.getEndDate(), conn);
 				if(test) {
 					// Dans le cadre d'une application a utilisé en production il faudrait ajouter ici une nouvelle fenetre qui permet le payement avec des intégrations diverse ( mastercard/visa/paypal/etc )
 					JOptionPane.showMessageDialog(null, "Votre reservation à bien été créer et le payement est validé");

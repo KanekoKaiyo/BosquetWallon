@@ -17,8 +17,23 @@ public class PlanningDAO extends DAO<Planning> {
 
 	@Override
 	public boolean create(Planning obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			String sql = "INSERT INTO Planning(beginDate,endDate,idBooking) VALUES(?,?,?)";
+			PreparedStatement ps = this.connect.prepareStatement(sql);
+			ps.setDate(1, new java.sql.Date(obj.getBeginDate().getTime()));
+			ps.setDate(2, new java.sql.Date(obj.getEndDate().getTime()));
+			ps.setInt(3, obj.getBook().getId());
+			
+			int result = ps.executeUpdate();
+			if(result == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class Planning {
 	private int id;
 	private Date beginDate;
 	private Date endDate;
+	private Booking book;
 	
 	private List<Show> listShow;
 
@@ -55,7 +56,15 @@ public class Planning {
 	public void setListShow(List<Show> listShow) {
 		this.listShow = listShow;
 	}
+	
+	public Booking getBook() {
+		return book;
+	}
 
+	public void setBook(Booking book) {
+		this.book = book;
+	}
+	
 	// Constructor
 	
 	public Planning() {}
@@ -67,16 +76,21 @@ public class Planning {
 		this.listShow = listShow;
 	}
 
-	public Planning(Date beginDate, Date endDate, List<Show> listShow) {
+	public Planning(Date beginDate, Date endDate, Booking book) {
 		this.beginDate = beginDate;
 		this.endDate = endDate;
-		this.listShow = listShow;
+		this.book = book;
 	}
 	
 	// dao
 	public List<Planning> findAll(Connection conn) {
 		PlanningDAO dao = new PlanningDAO(conn);
 		return dao.getAll();
+	}
+	
+	public boolean createPlanning(Connection conn) {
+		PlanningDAO dao = new PlanningDAO(conn);
+		return dao.create(this);
 	}
 	
 	// methods
