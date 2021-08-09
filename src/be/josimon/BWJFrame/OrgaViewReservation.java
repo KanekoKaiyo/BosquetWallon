@@ -1,11 +1,9 @@
 package be.josimon.BWJFrame;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,13 +14,16 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import be.josimon.BWConnect.DBConnect;
+import be.josimon.BWPOJO.Booking;
 import be.josimon.BWPOJO.Organizer;
-import be.josimon.BWPOJO.Planning;
 
 
 public class OrgaViewReservation extends JFrame {
+	private static final long serialVersionUID = 8844762404654614280L;
 
-	private static final long serialVersionUID = 1L;
+	Connection conn = DBConnect.getInstance();
+	
 	private JPanel contentPane;
 	JFrame instance = this;
 	private JTable table;
@@ -32,8 +33,8 @@ public class OrgaViewReservation extends JFrame {
 	 * Create the frame.
 	 */
 	public OrgaViewReservation(Organizer orga) {
-		List<Planning> plan = new ArrayList<Planning>();
-		plan = orga.getReservation();
+		orga.getReservation(conn); // TODO need to be tested
+		orga.getPlaning(conn); // TODO need to be tested
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -70,14 +71,14 @@ public class OrgaViewReservation extends JFrame {
 		contentPane.add(table.getTableHeader());
 		
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		for(Planning pls:plan) {
-			toTable[0] = pls.getBeginDate();
-			toTable[1] = pls.getEndDate();
-			toTable[2] = pls.getReservation().getStatut();
-			toTable[3] = pls.getReservation().getPrix();
-			toTable[4] = pls.getReservation().getAcompte();
-			toTable[5] = pls.getReservation().getSolde();
-			toTable[6] = pls.getReservation().getIdRéservation();
+		for(Booking book:orga.getListBooking()) {
+			toTable[0] = book.getPlanning().getBeginDate();
+			toTable[1] = book.getPlanning().getEndDate();
+			toTable[2] = book.getStatus();
+			toTable[3] = book.getPrice();
+			toTable[4] = book.getDeposite();
+			toTable[5] = book.getBalance();
+			toTable[6] = book.getId();
 			model.addRow(toTable);
 		}
 		

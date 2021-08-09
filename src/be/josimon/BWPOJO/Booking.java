@@ -13,7 +13,7 @@ public class Booking {
 	private double balance;
 	private double price;
 	private String status;
-	private List<Planning> planning;
+	private Planning planning;
 	private Organizer orga;
 	
 	// Getter & Setter
@@ -49,10 +49,10 @@ public class Booking {
 		this.status = status;
 	}
 	
-	public List<Planning> getPlanning() {
+	public Planning getPlanning() {
 		return planning;
 	}
-	public void setPlanning(List<Planning> planning) {
+	public void setPlanning(Planning planning) {
 		this.planning = planning;
 	}
 	
@@ -68,7 +68,7 @@ public class Booking {
 		this.orga = orga;
 	}
 	
-	public Booking(int id, double deposite, double balance, double price, String status, List<Planning> planning) {
+	public Booking(int id, double deposite, double balance, double price, String status, Planning planning) {
 		this.id = id;
 		this.deposite = deposite;
 		this.balance = balance;
@@ -76,7 +76,7 @@ public class Booking {
 		this.status = status;
 		this.planning = planning;
 	}
-	public Booking(double deposite, double balance, double price, String status, List<Planning> planning) {
+	public Booking(double deposite, double balance, double price, String status, Planning planning) {
 		this.deposite = deposite;
 		this.balance = balance;
 		this.price = price;
@@ -99,6 +99,18 @@ public class Booking {
 		return dao.create(this);
 	}
 	
+	public void getAllPlanning(Connection conn) {
+		/*List<Planning> temp = Planning.findAll(conn);
+		for(Planning plan:temp) {
+			if(plan.getBook().getId() == this.id) {
+				//planning == plan;
+			}
+		}*/
+		Planning plan = new Planning();
+		plan.setBook(this);
+		this.planning = plan.find(conn);
+	}
+	
 	public void findId(Connection conn) {
 		try {
 			BookingDAO dao = new BookingDAO(conn);
@@ -106,6 +118,11 @@ public class Booking {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public static List<Booking> getBooking(Connection conn) {
+		BookingDAO dao = new BookingDAO(conn);
+		return dao.getAll();
 	}
 	
 	public boolean createPlanning(Date ddebut, Date dfin,Connection conn) {

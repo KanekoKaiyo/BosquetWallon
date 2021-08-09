@@ -3,6 +3,7 @@ package be.josimon.BWDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,12 @@ public class PlanningDAO extends DAO<Planning> {
 		try {
 			String sql = "INSERT INTO Planning(beginDate,endDate,idBooking) VALUES(?,?,?)";
 			PreparedStatement ps = this.connect.prepareStatement(sql);
-			ps.setDate(1, new java.sql.Date(obj.getBeginDate().getTime()));
-			ps.setDate(2, new java.sql.Date(obj.getEndDate().getTime()));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String temp1 = sdf.format(obj.getBeginDate().getTime());
+			String temp2 = sdf.format(obj.getBeginDate().getTime());
+			
+			ps.setString(1, temp1);
+			ps.setString(2, temp2);
 			ps.setInt(3, obj.getBook().getId());
 			
 			int result = ps.executeUpdate();
@@ -50,8 +55,26 @@ public class PlanningDAO extends DAO<Planning> {
 
 	@Override
 	public Planning find(Planning obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Planning plan = new Planning();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			String sql = "SELECT * FROM Planning WHERE idBooking = ?";
+			PreparedStatement ps = this.connect.prepareStatement(sql);
+			ps.setInt(1, obj.getBook().getId());
+			
+			ResultSet result = ps.executeQuery();
+			
+			if(result.next()) {
+				plan.setId(result.getInt("idPlanning"));
+				plan.setBeginDate(sdf.parse(result.getString("beginDate")));
+				plan.setEndDate(sdf.parse(result.getString("endDate")));
+				plan.setBook(obj.getBook());
+			}
+			return plan;
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 
@@ -80,7 +103,6 @@ public class PlanningDAO extends DAO<Planning> {
 
 	@Override
 	public List<Planning> getAll(Planning obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

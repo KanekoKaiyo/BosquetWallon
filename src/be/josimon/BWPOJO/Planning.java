@@ -83,14 +83,19 @@ public class Planning {
 	}
 	
 	// dao
-	public List<Planning> findAll(Connection conn) {
+	public static List<Planning> findAll(Connection conn) {
 		PlanningDAO dao = new PlanningDAO(conn);
 		return dao.getAll();
 	}
-	
+		
 	public boolean createPlanning(Connection conn) {
 		PlanningDAO dao = new PlanningDAO(conn);
 		return dao.create(this);
+	}
+	
+	public Planning find(Connection conn) {
+		PlanningDAO dao = new PlanningDAO(conn);
+		return dao.find(this);
 	}
 	
 	// methods
@@ -160,5 +165,10 @@ public class Planning {
 		}
 		int temp = (annee/4) - (annee/100) + (annee/400);
 		 return temp;
+	}
+
+	public static List<Planning> getPlanning(Connection conn) {
+		PlanningDAO dao = new PlanningDAO(conn);
+		return dao.getAll();
 	}
 }

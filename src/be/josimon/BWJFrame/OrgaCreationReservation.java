@@ -34,7 +34,7 @@ public class OrgaCreationReservation extends JFrame {
 	Calendar cal = Calendar.getInstance(); 
 	Calendar calfin = Calendar.getInstance();
 	// TODO On recupere la liste complete du planning de la salle
-	List<Planning> list = new Planning().findAll(conn);
+	List<Planning> list = Planning.findAll(conn);
 	
 	Booking res = null;
 	Planning planning = null;

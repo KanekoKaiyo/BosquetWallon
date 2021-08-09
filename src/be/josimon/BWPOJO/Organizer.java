@@ -1,6 +1,7 @@
 package be.josimon.BWPOJO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Organizer extends Person {
 	// Variable
 	private String phoneNumber;
 	
-	private List<Booking> listBooking;
+	private List<Booking> listBooking = new ArrayList<Booking>();
 
 	// Getter & Setter
 	
@@ -55,10 +56,29 @@ public class Organizer extends Person {
 		this.role = person.role;
 	}
 	
+	public Organizer() {}
+
 	// dao
 	public boolean create(Connection conn) {
 		OrganizerDAO dao = new OrganizerDAO(conn);
 		return dao.create(this);
+	}
+	
+	public void getReservation(Connection conn) {
+		// on recupere la liste de toutes les booking et on ne garde que celle avec l'id de notre organisateur
+		List<Booking> temp = Booking.getBooking(conn);
+		for(Booking book:temp) {
+			if(book.getOrga().getId() == this.id) {
+				listBooking.add(book);
+			}
+		}
+	}
+	
+	public void getPlaning(Connection conn) {
+		// Pour chaque booking il faut aller chercher les planing
+		for(Booking book:listBooking) {
+			book.getAllPlanning(conn);
+		}
 	}
 	
 	public boolean createReservation(double acompte, double solde, String statut, double prix,Date dateDébutReservation, Date dateFinReservation, Connection conn) {
@@ -87,5 +107,10 @@ public class Organizer extends Person {
 		} catch (Exception ex) {
 			return false;	
 		}
+	}
+
+	public boolean payReservation(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
