@@ -68,6 +68,10 @@ public class Booking {
 		this.orga = orga;
 	}
 	
+	public Booking(int id) {
+		this.id = id;
+	}
+	
 	public Booking(int id, double deposite, double balance, double price, String status, Planning planning) {
 		this.id = id;
 		this.deposite = deposite;
@@ -99,13 +103,12 @@ public class Booking {
 		return dao.create(this);
 	}
 	
+	public boolean pay(Connection conn) {
+		BookingDAO dao = new BookingDAO(conn);
+		return dao.update(this);
+	}
+	
 	public void getAllPlanning(Connection conn) {
-		/*List<Planning> temp = Planning.findAll(conn);
-		for(Planning plan:temp) {
-			if(plan.getBook().getId() == this.id) {
-				//planning == plan;
-			}
-		}*/
 		Planning plan = new Planning();
 		plan.setBook(this);
 		this.planning = plan.find(conn);

@@ -109,8 +109,7 @@ public class Organizer extends Person {
 		}
 	}
 
-	public boolean payReservation(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean payReservation(int id,Connection conn) {
+		return new Booking(id).pay(conn);
 	}
 }

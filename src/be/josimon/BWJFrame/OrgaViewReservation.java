@@ -29,12 +29,15 @@ public class OrgaViewReservation extends JFrame {
 	private JTable table;
 	private JButton btnpay;
 	private JScrollPane scrollPane;
+
 	/**
 	 * Create the frame.
 	 */
 	public OrgaViewReservation(Organizer orga) {
-		orga.getReservation(conn); // TODO need to be tested
-		orga.getPlaning(conn); // TODO need to be tested
+		if(orga.getListBooking().isEmpty()) {
+			orga.getReservation(conn);
+			orga.getPlaning(conn);
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -43,17 +46,7 @@ public class OrgaViewReservation extends JFrame {
 		contentPane.setLayout(null);
 		setTitle("Vos réservations de la salle");
 		Object[] toTable = new Object[7];
-				
-		JButton btnleave = new JButton("Quitter");
-		btnleave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OrgaAccueil frame2 = new OrgaAccueil(orga);
-				instance.dispose();
-				frame2.setVisible(true);
-			}
-		});
-		btnleave.setBounds(759, 626, 113, 44);
-		contentPane.add(btnleave);
+
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 727, 659);
@@ -92,10 +85,11 @@ public class OrgaViewReservation extends JFrame {
 					if(statut.equals("Payé")) {
 						JOptionPane.showMessageDialog(null,"Vous ne pouvez pas payer une reservation déja payé");
 					} else {
-						boolean test = orga.payReservation(id);
+						boolean test = orga.payReservation(id,conn);
 						if(test == true) {
 							JOptionPane.showMessageDialog(null, "Payement effectué.");
 							table.setValueAt("Payé", row, 2);
+							table.setValueAt(0,row,5);
 						} else {
 							JOptionPane.showMessageDialog(null, "Un problème est survenue, contactez un administrateur.");
 						}
@@ -107,6 +101,20 @@ public class OrgaViewReservation extends JFrame {
 		});
 		btnpay.setBounds(759, 11, 113, 37);
 		contentPane.add(btnpay);
+		
+		JButton btnleave = new JButton("Quitter");
+		btnleave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				OrgaAccueil frame2 = new OrgaAccueil(orga);
+				instance.dispose();
+				frame2.setVisible(true);
+			}
+		});		
+		btnleave.setBounds(759, 626, 113, 44);
+		contentPane.add(btnleave);
 	}
+	
 
+	
 }

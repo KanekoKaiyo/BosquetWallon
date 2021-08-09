@@ -47,8 +47,24 @@ public class BookingDAO extends DAO<Booking> {
 
 	@Override
 	public boolean update(Booking obj) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			String sql = "UPDATE Booking SET Statut = ?, balance = ? WHERE idBooking = ?";
+			PreparedStatement ps = this.connect.prepareStatement(sql);
+			ps.setString(1, "Payé");
+			ps.setDouble(2, 0);
+			ps.setInt(3, obj.getId());
+			
+			int row = ps.executeUpdate();
+			
+			if(row == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
